@@ -152,10 +152,10 @@ func submitFunc() {
 	b, readErr := ioutil.ReadFile(*submitCliInputJSON)
 	if readErr != nil {
 		fmt.Println(readErr.Error())
+		os.Exit(1)
 	}
 	jsonStr := string(b)
 	resp, err := getRequest().
-		// SetError(AuthError{}). // a dupe?
 		SetBody(jsonStr).
 		SetResult(&SubmitSuccess{}).
 		Post(fmt.Sprintf("%s/submit_job", url))
