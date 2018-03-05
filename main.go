@@ -38,17 +38,19 @@ type AuthError struct {
 }
 
 var (
-	app                = kingpin.New("batchwrapper", "Submit, cancel, and terminate AWS Batch jobs")
-	terminate          = app.Command("terminate", "Terminate a job you submitted")
-	terminateJobID     = terminate.Flag("job-id", "Job ID").Required().String()
-	terminateReason    = terminate.Flag("reason", "reason for termination").Required().String()
+	app = kingpin.New("batchwrapper", `Cancel, terminate, and submit AWS Batch jobs.
+Full docs at https;//bit.ly/HutchBatchDocs`)
 	cancel             = app.Command("cancel", "Cancel a job you submitted")
 	cancelJobID        = cancel.Flag("job-id", "Job ID").Required().String()
 	cancelReason       = cancel.Flag("reason", "reason for termination").Required().String()
+	terminate          = app.Command("terminate", "Terminate a job you submitted")
+	terminateJobID     = terminate.Flag("job-id", "Job ID").Required().String()
+	terminateReason    = terminate.Flag("reason", "reason for termination").Required().String()
 	submit             = app.Command("submit", "Submit a job")
-	submitCliInputJSON = submit.Flag("cli-input-json", "JSON file containing job info").Required().ExistingFile()
-	creds              = AwsCreds{}
-	url                = ""
+	submitCliInputJSON = submit.Flag("cli-input-json", "JSON file containing job info").
+				PlaceHolder("JSON_FILE").Required().ExistingFile()
+	creds = AwsCreds{}
+	url   = ""
 )
 
 // See comment in main()
